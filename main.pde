@@ -72,7 +72,7 @@ void drawSquares() {
             textAlign(CENTER, CENTER);
             fill(255);
             textSize(44);
-            text(s.value, xSquare+50, ySquare+50);
+            text(s.value, xSquare+50, ySquare+45);
           }
         }
     }
