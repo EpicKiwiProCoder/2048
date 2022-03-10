@@ -52,7 +52,7 @@ void addRandom() {
     if (!duplicate) {break;}
     
   }
-  if (random(1) > 0.7) {value = 4;} 
+  if (random(1) > 0.85) {value = 4;} 
   else {value = 2;}
   squares.add(new square(x,y,value));
 }
