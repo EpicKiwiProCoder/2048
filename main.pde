@@ -3,22 +3,26 @@ ArrayList<square> toRemove = new ArrayList<square>();
 int score, value, x, y = 0;
 class square{
   int x,y,value = 0;
+  boolean merged = false;
   square(int x, int y, int value) {
     this.x = x;
     this.y = y;
     this.value = value;
   }
-  void move(int xOffset, int yOffset) {
+  boolean move(int xOffset, int yOffset) {
     boolean blocked = false;
+    boolean moved = false;
     while (!blocked) {
       for (square s : squares) {
         if (s.x == this.x+xOffset && s.y == this.y+yOffset) {
-          if (s.value == this.value) {
+          if (s.value == this.value && !s.merged) {
+            merged = true;
             toRemove.add(s);
             this.x += xOffset;
             this.y += yOffset;
             this.value *= 2;
             score += this.value;
+            moved = true;
           }
           blocked = true;
         }
@@ -34,13 +38,15 @@ class square{
       if (!blocked) {
         this.x += xOffset;
         this.y += yOffset;
+        moved = true;
       }
     }
+    return moved;
   }
 }
 void addRandom() {
   while (true) {
-    if (squares.size() == 17) {println("Game Over");return;}
+    if (squares.size() == 16) {println("Game Over");return;}
     x = int(random(4));
     y = int(random(4));
     boolean duplicate = false;
@@ -86,59 +92,60 @@ void setup() {
   
 }
 void keyPressed() {
-  
+  boolean moved = false;
   if (keyCode == UP) {
     for (int y = 0; y < 4; y++) {
       for (int x = 0; x < 4; x++) {
         for (square s : squares) {
           if (s.x == x && s.y == y) {
-            s.move(0, -1);
+            if(s.move(0, -1) == true) {moved=true;}
             
           }
         }
         
       } 
     }
-    addRandom();
   } else if (keyCode == DOWN) {
     for (int y = 3; y >= 0; y--) {
       for (int x = 0; x < 4; x++) {
         for (square s : squares) {
           if (s.x == x && s.y == y) {
-            s.move(0, 1);
+            if(s.move(0, 1) == true) {moved=true;}
           }
         }
         
       } 
     }
-    addRandom();
   } 
   else if (keyCode == LEFT) {
     for (int x = 0; x < 4; x++) {
       for (int y = 0; y < 4; y++) {
         for (square s : squares) {
           if (s.x == x && s.y == y) {
-            s.move(-1, 0);
+            if(s.move(-1, 0) == true) {moved=true;}
           }
         }
       } 
     }
-    addRandom();
   }
   else if (keyCode == RIGHT) {
     for (int x = 3; x >= 0; x--) {
       for (int y = 0; y < 4; y++) {
         for (square s : squares) {
           if (s.x == x && s.y == y) {
-            s.move(1, 0);
+            
+            if(s.move(1, 0) == true) {moved=true;}
           }
         }      
       } 
     }
-    addRandom();
   }
+  if(moved){addRandom();}
   for (square s : toRemove) {
     squares.remove(s);
+  }
+  for (square s : squares) {
+    s.merged = false;
   }
 }
 
