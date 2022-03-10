@@ -62,7 +62,7 @@ void drawSquares() {
     for (int x = 0; x < 4; x++) {
         xSquare = x*100+20*(x+1);
         ySquare = y*100+20*(y+1)+120;
-        fill(200); //blank square
+        fill(205,193,180); //blank square
         rect(xSquare, ySquare, 100, 100, 8);
         for (square s : squares) {
           if (s.x == x && s.y == y) {
@@ -145,9 +145,9 @@ void keyPressed() {
 int xSquare, ySquare = 0;
 
 void draw() {
-  fill(100);
+  fill(75);
   noStroke();
-  background(150);
+  background(187,173,160);
   textSize(80);
   stroke(255);
   textAlign(LEFT, TOP);
