@@ -151,7 +151,6 @@ void keyPressed() {
   for (square s : squares) {
     s.merged = false;
   }
-  println(squares.size());
 }
 
 int xSquare, ySquare = 0;
