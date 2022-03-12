@@ -3,7 +3,7 @@ ArrayList<square> toRemove = new ArrayList<square>();
 int score, value, x, y = 0;
 class square{
   int x,y,value = 0;
-  boolean merged = false;
+  boolean merged, removed = false;
   square(int x, int y, int value) {
     this.x = x;
     this.y = y;
@@ -15,9 +15,12 @@ class square{
     while (!blocked) {
       for (square s : squares) {
         if (s.x == this.x+xOffset && s.y == this.y+yOffset) {
-          if (s.value == this.value && !s.merged) {
+          // s is square in front
+          if (s.value == this.value && !s.merged && !this.merged && !s.removed) {
+            //should merge
             merged = true;
-            toRemove.add(s);
+            s.removed = true;
+            toRemove.add(s); //here 
             this.x += xOffset;
             this.y += yOffset;
             this.value *= 2;
@@ -93,6 +96,7 @@ void setup() {
 }
 void keyPressed() {
   boolean moved = false;
+  
   if (keyCode == UP) {
     for (int y = 0; y < 4; y++) {
       for (int x = 0; x < 4; x++) {
@@ -147,6 +151,7 @@ void keyPressed() {
   for (square s : squares) {
     s.merged = false;
   }
+  println(squares.size());
 }
 
 int xSquare, ySquare = 0;
